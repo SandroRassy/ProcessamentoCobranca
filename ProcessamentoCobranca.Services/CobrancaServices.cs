@@ -37,10 +37,31 @@ namespace ProcessamentoCobranca.Services
             return result;
         }
 
-        public Cobranca QueryFilter(DateTime dataVencimento, string cpf)
+        public IQueryable<Cobranca> QueryFilter(string mesref, string cpf)
         {
-            var result = _cobrancaRepository.QueryFilter(dataVencimento, cpf);
-            return result;
+            if (!String.IsNullOrEmpty(mesref))
+            {
+                var mesrefsplit = mesref.Split('/');
+                var ano = int.Parse(mesrefsplit[1]);
+                var mes = int.Parse(mesrefsplit[0]);
+
+                DateTime primeiroDiaDoMes = new DateTime(ano, mes, 1);
+                DateTime ultimoDiaDoMes = new DateTime(primeiroDiaDoMes.Year, primeiroDiaDoMes.Month, DateTime.DaysInMonth(primeiroDiaDoMes.Year, primeiroDiaDoMes.Month)).AddMinutes(1439).AddSeconds(59);
+
+                if(String.IsNullOrEmpty(cpf))
+                    return _cobrancaRepository.QueryRefMes(primeiroDiaDoMes, ultimoDiaDoMes);
+                else
+                    return _cobrancaRepository.QueryRefMes(primeiroDiaDoMes, ultimoDiaDoMes, cpf);
+            }
+            else
+            {
+                return _cobrancaRepository.QueryCPF(cpf);
+            }
+
+            
+
+            
+            
         }
     }
 }

@@ -22,6 +22,12 @@ namespace ProcessamentoCobranca.Repository
         {
         }
 
+        public IQueryable<Cobranca> QueryCPF(string cpf)
+        {
+            var retorno = _collectionName.AsQueryable<Cobranca>().Where(w => w.CPF == cpf );
+            return retorno;
+        }
+
         public Cobranca QueryFilter(DateTime dataVencimento, string cpf)
         {
             var retorno = new Cobranca();
@@ -37,7 +43,12 @@ namespace ProcessamentoCobranca.Repository
         public IQueryable<Cobranca> QueryRefMes(DateTime dataInicio, DateTime dataFim, string cpf)
         {
             var retorno = _collectionName.AsQueryable<Cobranca>().Where(w => w.CPF == cpf && w.DataVencimento >= dataInicio && w.DataVencimento <= dataFim); 
+            return retorno;
+        }
 
+        public IQueryable<Cobranca> QueryRefMes(DateTime dataInicio, DateTime dataFim)
+        {
+            var retorno = _collectionName.AsQueryable<Cobranca>().Where(w => w.DataVencimento >= dataInicio && w.DataVencimento <= dataFim);
             return retorno;
         }
     }
