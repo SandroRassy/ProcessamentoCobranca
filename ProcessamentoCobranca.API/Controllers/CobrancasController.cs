@@ -27,7 +27,7 @@ namespace ProcessamentoCobranca.API.Controllers
             try
             {
                 if (GetRefMesCpf(cpf,mesref))                    
-                    return Ok(_cobrancaServices.QueryAll());
+                    return Ok(_cobrancaServices.QueryFilter(mesref,cpf));
                 else
                     return BadRequest();
             }
@@ -136,18 +136,19 @@ namespace ProcessamentoCobranca.API.Controllers
         private bool GetRefMesCpf(string ?cpf, string ?mesref)
         {
             bool Validado = false;
-            if (!String.IsNullOrEmpty(cpf) || !String.IsNullOrEmpty(mesref))
+
+            if (!String.IsNullOrEmpty(cpf))
             {
                 if (!CpfValidation.Validate(cpf))
                     throw new Exception($"CPF inválido!");
-
+                Validado = true;
+            } 
+            if (!String.IsNullOrEmpty(mesref))
+            {
                 if (!MesRefValidate(mesref))
                     throw new Exception($"Mês de referência inválido!");
-            }
-            else
-            {
-                throw new Exception($"Nenhum dos campos não podem estar em branco.");
-            }
+                Validado = true;
+            }            
 
             return Validado;
         }        

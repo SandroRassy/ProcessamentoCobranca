@@ -12,7 +12,7 @@ namespace ProcessamentoCobranca.Services.Interfaces
         IQueryable<Cobranca> QueryAll();
 
         Cobranca Query(Guid key);
-        Cobranca QueryFilter(DateTime dataVencimento, string cpf);
+        IQueryable<Cobranca> QueryFilter(string mesref, string cpf);
         void Insert(Cobranca product);
     }
 }
