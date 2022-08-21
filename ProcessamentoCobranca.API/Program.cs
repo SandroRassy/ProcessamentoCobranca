@@ -22,6 +22,21 @@ var ListaCollectionName = mongoDbSettings.CollectionName.ToList();
 builder.Services.AddSingleton<IClienteRepository<Cliente>>(p => new ClienteRepository(connectionFactory,mongoDbSettings.DatabaseName, ListaCollectionName[0]));
 builder.Services.AddSingleton<ICobrancaRepository<Cobranca>>(p => new CobrancaRepository(connectionFactory,mongoDbSettings.DatabaseName, ListaCollectionName[1]));
 
+//builder.Services.AddTransient<ServiceResolver>(serviceProvider => key =>
+//{
+//    switch (key)
+//    {
+//        case "A":
+//            return serviceProvider.GetService<ServiceA>();
+//        case "B":
+//            return serviceProvider.GetService<ServiceB>();
+//        case "C":
+//            return serviceProvider.GetService<ServiceC>();
+//        default:
+//            throw new KeyNotFoundException(); // or maybe return null, up to you
+//    }
+//});
+
 
 builder.Services.AddTransient<IClienteServices, ClienteServices>();
 builder.Services.AddTransient<ICobrancaServices, CobrancaServices>();
