@@ -2,9 +2,9 @@
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using ProcessamentoCobranca.API.Models.DTO;
-using ProcessamentoCobranca.API.Models.Shared;
 using ProcessamentoCobranca.Domain.Entities;
 using ProcessamentoCobranca.Services.Interfaces;
+using ProcessamentoCobranca.Services.Models.Shared;
 using System.Text.RegularExpressions;
 
 namespace ProcessamentoCobranca.API.Controllers
