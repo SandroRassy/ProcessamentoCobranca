@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ProcessamentoCobranca.API.Models.DTO;
 using ProcessamentoCobranca.Domain.Entities;
-using ProcessamentoCobranca.Services;
 using ProcessamentoCobranca.Services.Interfaces;
 using System.Text.RegularExpressions;
 

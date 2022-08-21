@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentValidator;
+using Microsoft.AspNetCore.Mvc;
 using ProcessamentoCobranca.API.Models.DTO;
 using ProcessamentoCobranca.Domain.Entities;
-using ProcessamentoCobranca.Services;
 using ProcessamentoCobranca.Services.Interfaces;
-using System.Net;
-using DocumentValidator;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
