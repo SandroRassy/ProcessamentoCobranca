@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.0.6" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ProcessamentoCobranca.Domain\ProcessamentoCobranca.Domain.csproj" />
     <ProjectReference Include="..\ProcessamentoCobranca.Repository\ProcessamentoCobranca.Repository.csproj" />
   </ItemGroup>
