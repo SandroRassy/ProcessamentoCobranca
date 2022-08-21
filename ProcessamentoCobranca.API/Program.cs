@@ -1,12 +1,11 @@
-using Microsoft.Extensions.DependencyInjection;
-using ProcessamentoCobranca.Domain.Entities;
 using ProcessamentoCobranca.Domain.Settings;
 using ProcessamentoCobranca.Repository;
-using ProcessamentoCobranca.Repository.Base;
 using ProcessamentoCobranca.Repository.Context;
 using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Services;
 using ProcessamentoCobranca.Services.Interfaces;
+using MassTransit;
+using ProcessamentoCobranca.Services.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +24,8 @@ builder.Services.AddSingleton<ICobrancaRepository>(p => new CobrancaRepository(c
 
 builder.Services.AddTransient<IClienteServices, ClienteServices>();
 builder.Services.AddTransient<ICobrancaServices, CobrancaServices>();
+
+builder.Services.AddMassTransitExtension(builder.Configuration);
 
 var app = builder.Build();
 

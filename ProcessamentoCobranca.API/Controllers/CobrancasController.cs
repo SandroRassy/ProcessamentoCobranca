@@ -1,6 +1,8 @@
 ﻿using DocumentValidator;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using ProcessamentoCobranca.API.Models.DTO;
+using ProcessamentoCobranca.API.Models.Shared;
 using ProcessamentoCobranca.Domain.Entities;
 using ProcessamentoCobranca.Services.Interfaces;
 using System.Text.RegularExpressions;
@@ -13,11 +15,13 @@ namespace ProcessamentoCobranca.API.Controllers
     {
         private readonly ICobrancaServices _cobrancaServices;
         private readonly IClienteServices _clienteServices;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public CobrancasController(ICobrancaServices cobrancaServices, IClienteServices clienteServices)
+        public CobrancasController(ICobrancaServices cobrancaServices, IClienteServices clienteServices, IPublishEndpoint publishEndpoint)
         {
             _cobrancaServices = cobrancaServices;
-            _clienteServices = clienteServices; 
+            _clienteServices = clienteServices;
+            _publishEndpoint = publishEndpoint;
         }
         // GET: api/<CobrancasController>
         [HttpGet]
@@ -46,12 +50,18 @@ namespace ProcessamentoCobranca.API.Controllers
 
         // POST api/<CobrancasController>
         [HttpPost]
-        public ActionResult Post([FromBody] CobrancaDTO cobranca)
+        public async Task<IActionResult> Post([FromBody] CobrancaDTO cobranca)
         {            
             try
             {
                 if (CobrancaValidate(cobranca))
+                {
                     _cobrancaServices.Insert(CobrancaFill(cobranca));
+                    await _publishEndpoint.Publish<CalculoConsumo>(new
+                    {
+                        cpf = cobranca.CPF
+                    }) ;
+                }
 
                 return Ok(cobranca);
             }
