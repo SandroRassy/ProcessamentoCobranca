@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Services.Interfaces
 {
-    public interface IClienteServices
-    {
-        IQueryable<Cliente> QueryAll();
-
-        Cliente Query(Guid key);
-        Cliente QueryFilter(string nome, string cpf);
-        void Insert(Cliente product);
+    public interface IClienteServices : IService<Cliente>
+    {        
+        Cliente QueryFilter(string nome, string cpf);        
     }
 }

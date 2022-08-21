@@ -19,8 +19,8 @@ var mongoDbSettings = builder.Configuration.GetSection("MongoDatabase").Get<Mong
 var connectionFactory = new ConnectionFactory(mongoDbSettings.ConnectionString);
 var ListaCollectionName = mongoDbSettings.CollectionName.ToList();
 
-builder.Services.AddSingleton<IClienteRepository<Cliente>>(p => new ClienteRepository(connectionFactory,mongoDbSettings.DatabaseName, ListaCollectionName[0]));
-builder.Services.AddSingleton<ICobrancaRepository<Cobranca>>(p => new CobrancaRepository(connectionFactory,mongoDbSettings.DatabaseName, ListaCollectionName[1]));
+builder.Services.AddSingleton<IClienteRepository>(p => new ClienteRepository(connectionFactory,mongoDbSettings.DatabaseName, ListaCollectionName[0]));
+builder.Services.AddSingleton<ICobrancaRepository>(p => new CobrancaRepository(connectionFactory,mongoDbSettings.DatabaseName, ListaCollectionName[1]));
 
 
 builder.Services.AddTransient<IClienteServices, ClienteServices>();
