@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Repository.Interfaces
 {
-    public interface IClienteRepository<T> : IRepository<T>
+    public interface IClienteRepository : IRepository<Cliente>
     {
         Cliente QueryFilter(string nome, string cpf);
     }

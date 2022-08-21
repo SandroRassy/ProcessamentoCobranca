@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Repository.Interfaces
 {
-    public interface ICobrancaRepository<T> : IRepository<T>
+    public interface ICobrancaRepository : IRepository<Cobranca>
     {
         Cobranca QueryFilter(DateTime dataVencimento, string cpf);
         IQueryable<Cobranca> QueryRefMes(DateTime dataInicio, DateTime dataFim, string cpf);

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Repository
 {
-    public sealed class CobrancaRepository : Repository<Cobranca>, ICobrancaRepository<Cobranca>
+    public sealed class CobrancaRepository : Repository<Cobranca>, ICobrancaRepository
     {
         public CobrancaRepository(IMongoCollection<Cobranca> collectionName) : base(collectionName)
         {

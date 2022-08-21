@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Repository
 {
-    public sealed class ClienteRepository : Repository<Cliente>, IClienteRepository<Cliente>
+    public sealed class ClienteRepository : Repository<Cliente>, IClienteRepository
     {
         public ClienteRepository(IMongoCollection<Cliente> collectionName) : base(collectionName)
         {

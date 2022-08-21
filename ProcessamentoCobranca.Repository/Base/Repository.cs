@@ -38,6 +38,6 @@ namespace ProcessamentoCobranca.Repository.Base
         public IQueryable<T> QueryAll()
         {
             return _collectionName.AsQueryable<T>();
-        }
+        }        
     }
 }

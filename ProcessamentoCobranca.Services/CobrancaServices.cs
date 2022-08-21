@@ -1,6 +1,7 @@
 ﻿using ProcessamentoCobranca.Domain.Entities;
 using ProcessamentoCobranca.Repository;
 using ProcessamentoCobranca.Repository.Interfaces;
+using ProcessamentoCobranca.Services.Base;
 using ProcessamentoCobranca.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,32 +11,14 @@ using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Services
 {
-    public class CobrancaServices : ICobrancaServices
+    public class CobrancaServices : Services<Cobranca>, ICobrancaServices
     {
-        private readonly ICobrancaRepository<Cobranca> _cobrancaRepository;
+        private readonly ICobrancaRepository _cobrancaRepository;
 
-        public CobrancaServices(ICobrancaRepository<Cobranca> cobrancaRepository)
+        public CobrancaServices(ICobrancaRepository cobrancaRepository):base(cobrancaRepository)
         {
             _cobrancaRepository = cobrancaRepository;
-        }
-        public void Insert(Cobranca cobranca)
-        {
-            _cobrancaRepository.Insert(cobranca);
-        }
-
-        public Cobranca Query(Guid key)
-        {
-            var result = _cobrancaRepository.Query(key);
-
-            return result;
-        }
-
-        public IQueryable<Cobranca> QueryAll()
-        {
-            var result = _cobrancaRepository.QueryAll();
-
-            return result;
-        }
+        }        
 
         public IQueryable<Cobranca> QueryFilter(string mesref, string cpf)
         {
