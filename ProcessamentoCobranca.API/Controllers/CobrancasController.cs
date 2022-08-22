@@ -41,12 +41,20 @@ namespace ProcessamentoCobranca.API.Controllers
             }                                 
         }
 
-        // GET api/<CobrancasController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        //GET api/<CobrancasController>/5
+        [HttpGet("{id}")]
+        public ActionResult Get(string id)
+        {
+            try
+            {
+                return Ok(_cobrancaServices.Query(Guid.Parse(id)));
+            }
+            catch (Exception exception)
+            {
+                Response.StatusCode = 400;
+                return new JsonResult($"Erro: {exception.Message}");
+            }
+        }
 
         // POST api/<CobrancasController>
         [HttpPost]
