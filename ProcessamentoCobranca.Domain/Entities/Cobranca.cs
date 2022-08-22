@@ -4,7 +4,7 @@ using ProcessamentoCobranca.Domain.Base;
 namespace ProcessamentoCobranca.Domain.Entities
 {
     [BsonIgnoreExtraElements]
-    public sealed class Cobranca : Entity
+    public class Cobranca : Entity
     {
         public DateTime DataVencimento { get; set; }
         public string CPF { get; set; }

@@ -24,10 +24,12 @@ try
 
     builder.Services.AddSingleton<IClienteRepository>(p => new ClienteRepository(connectionFactory, mongoDbSettings.DatabaseName, ListaCollectionName[0]));
     builder.Services.AddSingleton<ICobrancaRepository>(p => new CobrancaRepository(connectionFactory, mongoDbSettings.DatabaseName, ListaCollectionName[1]));
+    builder.Services.AddSingleton<ICobrancaConsumoRepository>(p => new CobrancaConsumoRepository(connectionFactory, mongoDbSettings.DatabaseName, ListaCollectionName[2]));
 
 
     builder.Services.AddTransient<IClienteServices, ClienteServices>();
     builder.Services.AddTransient<ICobrancaServices, CobrancaServices>();
+    builder.Services.AddTransient<ICobrancaConsumoServices, CobrancaConsumoServices>();
 
     builder.Services.AddMassTransitExtension(builder.Configuration);
 
