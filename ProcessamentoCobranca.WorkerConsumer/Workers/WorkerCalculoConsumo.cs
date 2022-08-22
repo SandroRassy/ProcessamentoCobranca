@@ -1,6 +1,11 @@
 ﻿using MassTransit;
+using Microsoft.Extensions.Configuration;
+//using MongoDB.Bson.IO;
+using MongoDB.Driver.Core.WireProtocol.Messages;
+using Newtonsoft.Json;
 using ProcessamentoCobranca.Services.Interfaces;
 using ProcessamentoCobranca.Services.Models.Shared;
+using ProcessamentoCobranca.WorkerConsumer.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,24 +20,39 @@ namespace ProcessamentoCobranca.WorkerConsumer.Workers
     {        
         
         public async Task Consume(ConsumeContext<CalculoConsumo> context)
-        {            
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+            UrlAPISetting settings = config.GetRequiredSection("UrlAPISetting").Get<UrlAPISetting>();
+            //Console.WriteLine($"settings.Url: [{settings.Url}"); 
+
             var data = context.Message;      
             
 
             using (var httpClient = new HttpClient())
-            {
-                httpClient.BaseAddress = new Uri($"http://localhost:5147/api/Clientes/cpf?cpf={data.cpf}");
+            {                
+                //httpClient.BaseAddress = new Uri($"{settings.Url}/api/Clientes/cpf?cpf={data.cpf}");
+                //httpClient.BaseAddress = new Uri($"{settings.Url}/api/Cobrancas/{data.idBoleto}");                
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var responseMessage = await httpClient.GetAsync("");
+                var parametros = new CalculoConsumoDTO
+                {
+                    key = data.idBoleto,
+                    cpf = data.cpf
+                };
+
+                var content = new StringContent(JsonConvert.SerializeObject(parametros), Encoding.UTF8, "application/json");
+
+                //var responseMessage = await httpClient.GetAsync("");
+                var responseMessage = httpClient.PostAsync(new Uri($"{settings.Url}/api/CalculoConsumo/"), content).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"CPF: [{responseMessage.Content.ReadAsStringAsync().Result}");
+                    Console.WriteLine($"Boleto envio para calculo.");                    
                 }                
-            }
-
-            Console.WriteLine($"CPF: [{data.cpf}");            
+            }                      
         }
     }
 }

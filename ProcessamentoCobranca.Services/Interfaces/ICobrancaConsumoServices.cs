@@ -9,5 +9,6 @@ namespace ProcessamentoCobranca.Services.Interfaces
 {
     public interface ICobrancaConsumoServices : IService<CobrancaConsumo>
     {
+        void CalcularConsumo(Cobranca cobranca);
     }
 }

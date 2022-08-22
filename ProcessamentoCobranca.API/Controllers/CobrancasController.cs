@@ -13,15 +13,17 @@ namespace ProcessamentoCobranca.API.Controllers
     [ApiController]
     public class CobrancasController : ControllerBase
     {
+        private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
         private readonly ICobrancaServices _cobrancaServices;
         private readonly IClienteServices _clienteServices;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public CobrancasController(ICobrancaServices cobrancaServices, IClienteServices clienteServices, IPublishEndpoint publishEndpoint)
+        public CobrancasController(ICobrancaServices cobrancaServices, IClienteServices clienteServices, IPublishEndpoint publishEndpoint, ICobrancaConsumoServices cobrancaConsumoServices)
         {
             _cobrancaServices = cobrancaServices;
             _clienteServices = clienteServices;
             _publishEndpoint = publishEndpoint;
+            _cobrancaConsumoServices = cobrancaConsumoServices;
         }
         // GET: api/<CobrancasController>
         [HttpGet]
@@ -64,11 +66,13 @@ namespace ProcessamentoCobranca.API.Controllers
             {
                 if (CobrancaValidate(cobranca))
                 {
-                    _cobrancaServices.Insert(CobrancaFill(cobranca));
+                    var obj = CobrancaFill(cobranca);
+                    _cobrancaServices.Insert(obj);
                     await _publishEndpoint.Publish<CalculoConsumo>(new
                     {
-                        cpf = cobranca.CPF
-                    }) ;
+                        cpf = cobranca.CPF,
+                        idBoleto = obj.Key.ToString()
+                    });
                 }
 
                 return Ok(cobranca);
@@ -78,7 +82,7 @@ namespace ProcessamentoCobranca.API.Controllers
                 Response.StatusCode = 400;
                 return new JsonResult($"Erro: {exception.Message}");
             }
-        }
+        }        
 
         // PUT api/<CobrancasController>/5
         [HttpPut("")]

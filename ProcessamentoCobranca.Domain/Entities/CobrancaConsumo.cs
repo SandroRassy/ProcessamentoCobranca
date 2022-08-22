@@ -12,13 +12,16 @@ namespace ProcessamentoCobranca.Domain.Entities
     public sealed class CobrancaConsumo : Cobranca
     {       
         public string ValorConsumo { get; set; }        
+        public string IdBoleto { get; set; }
 
-        public CobrancaConsumo(DateTime dataVencimento, string cpf, string valorcobranca, string valorconsumo)
+        public CobrancaConsumo(Cobranca obj, string valorconsumo, string idboleto)
         {
-            DataVencimento = dataVencimento;
-            CPF = cpf;
-            ValorCobranca = valorcobranca;
+            DataVencimento = obj.DataVencimento;
+            CPF = obj.CPF;
+            ValorCobranca = obj.ValorCobranca;            
+            Key = obj.Key;
             ValorConsumo = valorconsumo;
+            IdBoleto = idboleto;
         }
     }
 }

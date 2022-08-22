@@ -13,11 +13,22 @@ namespace ProcessamentoCobranca.Services
 {
     public class CobrancaConsumoServices : Services<CobrancaConsumo>, ICobrancaConsumoServices
     {
-        private readonly ICobrancaConsumoRepository _cobrancaRepository;
+        private readonly ICobrancaConsumoRepository _cobrancaConsumoRepository;
 
         public CobrancaConsumoServices(ICobrancaConsumoRepository cobrancaConsumoRepository) : base(cobrancaConsumoRepository)
         {
-            _cobrancaRepository = cobrancaConsumoRepository;
+            _cobrancaConsumoRepository = cobrancaConsumoRepository;
+        }
+
+        public void CalcularConsumo(Cobranca cobranca)
+        {
+            string digitoInical = cobranca.CPF.Substring(0, 2);
+            string digitoFinal = cobranca.CPF.Substring(cobranca.CPF.Length - 2, 2);
+            string valorConsumo = digitoInical + digitoFinal + ",00";
+
+            var consumo = new CobrancaConsumo(cobranca, valorConsumo, cobranca.Key.ToString());
+
+            _cobrancaConsumoRepository.Insert(consumo);
         }
     }
 }
