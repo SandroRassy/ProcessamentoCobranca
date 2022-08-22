@@ -4,6 +4,7 @@ using ProcessamentoCobranca.Services.Models.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -11,24 +12,27 @@ using System.Xml.Linq;
 namespace ProcessamentoCobranca.WorkerConsumer.Workers
 {
     public class WorkerCalculoConsumo : IConsumer<CalculoConsumo>
-    {
-        //private readonly RequestContext ctx;
-        private readonly ICobrancaServices _cobrancaServices;
-        private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
-        //public WorkerCalculoConsumo(ICobrancaConsumoServices cobrancaConsumoServices, ICobrancaServices cobrancaServices)
-        //{
-        //    _cobrancaConsumoServices = cobrancaConsumoServices;
-        //    _cobrancaServices = cobrancaServices;
-        //}
+    {        
         
-        public Task Consume(ConsumeContext<CalculoConsumo> context)
-        {
-            var cpf = context.Message.cpf;
+        public async Task Consume(ConsumeContext<CalculoConsumo> context)
+        {            
+            var data = context.Message;      
+            
 
-            var cobranca = _cobrancaServices.Query(new Guid());
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri($"http://localhost:5147/api/Clientes/cpf?cpf={data.cpf}");
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            Console.WriteLine($"CPF: [{cpf}");
-            return Task.CompletedTask;
+                var responseMessage = await httpClient.GetAsync("");
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"CPF: [{responseMessage.Content.ReadAsStringAsync().Result}");
+                }                
+            }
+
+            Console.WriteLine($"CPF: [{data.cpf}");            
         }
     }
 }
