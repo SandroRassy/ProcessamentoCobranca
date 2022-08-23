@@ -22,9 +22,9 @@ namespace ProcessamentoCobranca.Services
 
         public void CalcularConsumo(Cobranca cobranca)
         {
-            string digitoInical = cobranca.CPF.Substring(0, 2);
-            string digitoFinal = cobranca.CPF.Substring(cobranca.CPF.Length - 2, 2);
-            string valorConsumo = digitoInical + digitoFinal + ",00";
+            int digitoInical = int.Parse(cobranca.CPF.Substring(0, 2));
+            int digitoFinal = int.Parse(cobranca.CPF.Substring(cobranca.CPF.Length - 2, 2));
+            string valorConsumo = digitoInical.ToString() + digitoFinal.ToString() + ",00";
 
             var consumo = new CobrancaConsumo(cobranca, valorConsumo, cobranca.Key.ToString());
 

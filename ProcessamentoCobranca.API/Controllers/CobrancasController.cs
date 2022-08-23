@@ -86,13 +86,21 @@ namespace ProcessamentoCobranca.API.Controllers
 
         // PUT api/<CobrancasController>/5
         [HttpPut("")]
-        public ActionResult Put(string dataVencimento, string cpf, string valorcobranca)
+        public async Task<IActionResult> Put(string dataVencimento, string cpf, string valorcobranca)
         {
             try
             {
                 var cobranca = new CobrancaDTO(dataVencimento, cpf, valorcobranca);
                 if (CobrancaValidate(cobranca))
-                    _cobrancaServices.Insert(CobrancaFill(cobranca));
+                {
+                    var obj = CobrancaFill(cobranca);
+                    _cobrancaServices.Insert(obj);
+                    await _publishEndpoint.Publish<CalculoConsumo>(new
+                    {
+                        cpf = cobranca.CPF,
+                        idBoleto = obj.Key.ToString()
+                    });
+                }                    
 
                 return Ok(cobranca);
             }

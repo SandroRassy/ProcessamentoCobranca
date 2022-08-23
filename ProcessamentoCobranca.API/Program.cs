@@ -6,6 +6,7 @@ using ProcessamentoCobranca.Services;
 using ProcessamentoCobranca.Services.Interfaces;
 using ProcessamentoCobranca.Services.Extensions;
 using Serilog;
+using ProcessamentoCobranca.API.Models.Enum;
 
 try
 {
@@ -20,11 +21,11 @@ try
 
     var mongoDbSettings = builder.Configuration.GetSection("MongoDatabase").Get<MongoDBSetting>();
     var connectionFactory = new ConnectionFactory(mongoDbSettings.ConnectionString);
-    var ListaCollectionName = mongoDbSettings.CollectionName.ToList();
+    //var ListaCollectionName = mongoDbSettings.CollectionName.ToList();
 
-    builder.Services.AddSingleton<IClienteRepository>(p => new ClienteRepository(connectionFactory, mongoDbSettings.DatabaseName, ListaCollectionName[0]));
-    builder.Services.AddSingleton<ICobrancaRepository>(p => new CobrancaRepository(connectionFactory, mongoDbSettings.DatabaseName, ListaCollectionName[1]));
-    builder.Services.AddSingleton<ICobrancaConsumoRepository>(p => new CobrancaConsumoRepository(connectionFactory, mongoDbSettings.DatabaseName, ListaCollectionName[2]));
+    builder.Services.AddSingleton<IClienteRepository>(p => new ClienteRepository(connectionFactory, mongoDbSettings.DatabaseName, MongoDBCollections.CNClientes.ToString()));
+    builder.Services.AddSingleton<ICobrancaRepository>(p => new CobrancaRepository(connectionFactory, mongoDbSettings.DatabaseName, MongoDBCollections.CNCobrancas.ToString()));
+    builder.Services.AddSingleton<ICobrancaConsumoRepository>(p => new CobrancaConsumoRepository(connectionFactory, mongoDbSettings.DatabaseName, MongoDBCollections.CNCobrancasConsumo.ToString()));
 
 
     builder.Services.AddTransient<IClienteServices, ClienteServices>();
