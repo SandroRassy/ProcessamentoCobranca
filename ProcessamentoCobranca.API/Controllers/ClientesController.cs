@@ -17,7 +17,7 @@ namespace ProcessamentoCobranca.API.Controllers
         public ClientesController(IClienteServices clienteServices)
         {
             _clienteServices = clienteServices;
-        }        
+        }
 
         // GET api/<ClientesController>/5
         [HttpGet("cpf")]
@@ -31,8 +31,7 @@ namespace ProcessamentoCobranca.API.Controllers
                     return BadRequest();
             }
             catch (Exception exception)
-            {
-                //_logger.LogError(exception, exception.Message, product);                
+            {                             
                 return BadRequest($"Erro: {exception.Message}");
             }
         }
@@ -72,7 +71,7 @@ namespace ProcessamentoCobranca.API.Controllers
                 //_logger.LogError(exception, exception.Message, product);                
                 return BadRequest($"Erro: {exception.Message}");
             }
-        }        
+        }
 
         private Cliente ClienteFill(ClienteDTO cliente)
         {

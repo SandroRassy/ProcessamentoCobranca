@@ -12,11 +12,11 @@ namespace ProcessamentoCobranca.UnitTests.System.Controllers
         public async Task Post_IdBoleto_ShouldReturn400Status()
         {
             /// Arrange            
-            var sut = new CalculoConsumoController(_cobrancaConsumoService,_cobrancaService, _clienteService);
+            var sut = new CalculoConsumoController(_cobrancaConsumoService, _cobrancaService, _clienteService);
 
             /// Act            
             var CalculoConsumoDTO = new CalculoConsumoDTO();
-            CalculoConsumoDTO.CPF = "08309184778";
+            CalculoConsumoDTO.CPF = "50974463051";
             CalculoConsumoDTO.Key = "9d959854-5c31-43ee-823e-7ff6ece7bd7e";
             var result = (ObjectResult)sut.Post(CalculoConsumoDTO).Result;
 

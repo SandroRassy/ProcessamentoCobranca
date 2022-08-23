@@ -1,14 +1,11 @@
 ﻿using FluentAssertions;
-using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using Moq;
 using ProcessamentoCobranca.API.Controllers;
-using ProcessamentoCobranca.API.Models.DTO;
 using ProcessamentoCobranca.UnitTests.System.Base;
 
 namespace ProcessamentoCobranca.UnitTests.System.Controllers
 {
-    public  class TestRelatorioConsumoController : TestBase
+    public class TestRelatorioConsumoController : TestBase
     {
         [Fact]
         public async Task Get_ShouldReturn200Status()
