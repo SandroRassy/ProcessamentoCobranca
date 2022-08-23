@@ -1,18 +1,12 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-//using Xunit.DependencyInjection;
 using ProcessamentoCobranca.API.Controllers;
 using ProcessamentoCobranca.UnitTests.System.Base;
 
 namespace ProcessamentoCobranca.UnitTests.System.Controllers
 {
     public class TestCobrancasController : TestBase
-    {
-        //private readonly IPublishEndpoint _publishEndpoint;
-        //public TestCobrancasController(IPublishEndpoint publishEndpoint)
-        //{
-        //    _publishEndpoint = publishEndpoint;
-        //}
+    {        
 
         [Fact]
         public async Task Get_ShouldReturn200Status()

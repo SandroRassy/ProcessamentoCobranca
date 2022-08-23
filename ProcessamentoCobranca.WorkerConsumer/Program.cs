@@ -54,41 +54,7 @@ try
     {
         await busControl.StopAsync();
     }
-
-    //Console.WriteLine("Waiting for new messages.");
-
-    //var host = Host.CreateDefaultBuilder(args)
-    //    .UseSerilog(Log.Logger)
-    //    .ConfigureServices((context, collection) =>
-    //    {
-    //        //var appSettings = new AppSettings();
-    //        //context.Configuration.Bind(appSettings);
-    //        collection.AddHttpContextAccessor();
-
-    //        var rabbitMQSettings = builder.Configuration.GetConnectionString("RabbitMq");
-
-    //        collection.AddMassTransit(x =>
-    //        {
-    //            x.AddDelayedMessageScheduler();
-    //            x.AddConsumer<QueueCalculoConsumo>(typeof(QueueCalculoConsumoDefinition));                
-    //            //x.AddRequestClient<ConvertVideoEvent>();
-
-    //            x.SetKebabCaseEndpointNameFormatter();
-
-    //            x.UsingRabbitMq((ctx, cfg) =>
-    //            {
-    //                cfg.Host(rabbitMQSettings);
-    //                cfg.UseDelayedMessageScheduler();                    
-    //                cfg.ServiceInstance(instance =>
-    //                {
-    //                    instance.ConfigureJobServiceEndpoints();
-    //                    instance.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter("dev", false));
-    //                });
-    //            });
-    //        });
-    //    }).Build();
-
-    //await host.StartAsync();
+    
 }
 catch (Exception)
 {

@@ -20,8 +20,7 @@ try
     builder.Services.AddSwaggerGen();
 
     var mongoDbSettings = builder.Configuration.GetSection("MongoDatabase").Get<MongoDBSetting>();
-    var connectionFactory = new ConnectionFactory(mongoDbSettings.ConnectionString);
-    //var ListaCollectionName = mongoDbSettings.CollectionName.ToList();
+    var connectionFactory = new ConnectionFactory(mongoDbSettings.ConnectionString);    
 
     builder.Services.AddSingleton<IClienteRepository>(p => new ClienteRepository(connectionFactory, mongoDbSettings.DatabaseName, MongoDBCollections.CNClientes.ToString()));
     builder.Services.AddSingleton<ICobrancaRepository>(p => new CobrancaRepository(connectionFactory, mongoDbSettings.DatabaseName, MongoDBCollections.CNCobrancas.ToString()));
