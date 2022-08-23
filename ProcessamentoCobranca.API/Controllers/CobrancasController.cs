@@ -94,13 +94,18 @@ namespace ProcessamentoCobranca.API.Controllers
         private Cobranca CobrancaFill(CobrancaDTO cobranca)
         {
             DateTime data;
-            DateTime.TryParse(DateTime.Now.ToString(), out data);
+            DateTime.TryParse(cobranca.DataVencimento.ToString(), out data);
+
+            if(!(data.Date >= DateTime.Now.Date))
+                throw new Exception($"Data não pode ser menor que atual!");
+
             return new Cobranca(data, cobranca.CPF, cobranca.ValorCobranca.Replace("R$", String.Empty));
         }
 
         private bool CobrancaValidate(CobrancaDTO cobranca)
         {
             bool Validado = false;
+            double valor = 0;
             if (cobranca != null)
             {
                 if (!String.IsNullOrEmpty(cobranca.DataVencimento) || !String.IsNullOrEmpty(cobranca.ValorCobranca) || !String.IsNullOrEmpty(cobranca.CPF))
@@ -113,6 +118,16 @@ namespace ProcessamentoCobranca.API.Controllers
 
                     if (!RealValidate(cobranca.ValorCobranca))
                         throw new Exception($"Valor da cobrança não esta no formatado.");
+
+                    if(Double.TryParse(cobranca.ValorCobranca.Replace("R$",String.Empty), out valor))
+                        {
+                           if(!(valor > 0))
+                            throw new Exception($"Valor da cobrança precisa ser maior que zero.");
+                    }
+                    else
+                    {
+                        throw new Exception($"Valor da cobrança não esta no formatado.");
+                    }
 
                     if (!CpfValidation.Validate(cobranca.CPF))
                         throw new Exception($"CPF inválido!");
