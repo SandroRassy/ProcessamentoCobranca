@@ -21,5 +21,11 @@ namespace ProcessamentoCobranca.Repository
             : base(connectionFactory, databaseName, collectionName)
         {
         }
+
+        public IQueryable<CobrancaConsumo> QueryRefMes(DateTime dataInicio, DateTime dataFim, string estado)
+        {
+            var retorno = _collectionName.AsQueryable<CobrancaConsumo>().Where(w => w.Estado == estado && w.DataVencimento >= dataInicio && w.DataVencimento <= dataFim);
+            return retorno;
+        }
     }
 }

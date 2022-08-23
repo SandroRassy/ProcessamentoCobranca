@@ -2,6 +2,7 @@
 using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Services.Base;
 using ProcessamentoCobranca.Services.Interfaces;
+using ProcessamentoCobranca.Services.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,32 @@ namespace ProcessamentoCobranca.Services
             var consumo = new CobrancaConsumo(cobranca, valorConsumo, cobranca.Key.ToString(),cliente.Estado);
 
             _cobrancaConsumoRepository.Insert(consumo);
+        }
+
+        public RelatorioConsumoDTO QueryFilter(string mesref, string estado)
+        {
+            var retorno = new RelatorioConsumoDTO();
+            var mesrefsplit = mesref.Split('/');
+            var ano = int.Parse(mesrefsplit[1]);
+            var mes = int.Parse(mesrefsplit[0]);
+            double totalconsumo = 0;
+            double totalcobranca=  0;
+
+            DateTime primeiroDiaDoMes = new DateTime(ano, mes, 1);
+            DateTime ultimoDiaDoMes = new DateTime(primeiroDiaDoMes.Year, primeiroDiaDoMes.Month, DateTime.DaysInMonth(primeiroDiaDoMes.Year, primeiroDiaDoMes.Month)).AddMinutes(1439).AddSeconds(59);
+
+            var consumo =  _cobrancaConsumoRepository.QueryRefMes(primeiroDiaDoMes, ultimoDiaDoMes, estado.ToUpper()).ToList();
+
+            foreach (var item in consumo)
+            {
+                totalconsumo += Double.Parse(item.ValorConsumo);
+                totalcobranca += Double.Parse(item.ValorCobranca);
+            }
+
+            retorno.totalConsumo = String.Format("{0:0.00#}", totalconsumo);
+            retorno.totalCobrado = String.Format("{0:0.00#}", totalcobranca);
+
+            return retorno;
         }
     }
 }
