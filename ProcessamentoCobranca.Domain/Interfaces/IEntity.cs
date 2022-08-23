@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ProcessamentoCobranca.Domain.Interfaces
+﻿namespace ProcessamentoCobranca.Domain.Interfaces
 {
     public interface IEntity
     {

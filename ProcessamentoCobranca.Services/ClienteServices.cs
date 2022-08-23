@@ -2,26 +2,21 @@
 using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Services.Base;
 using ProcessamentoCobranca.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Services
 {
     public class ClienteServices : Services<Cliente>, IClienteServices
     {
-        private readonly IClienteRepository _clienteRepository;        
-        public ClienteServices(IClienteRepository clienteRepository): base(clienteRepository)
+        private readonly IClienteRepository _clienteRepository;
+        public ClienteServices(IClienteRepository clienteRepository) : base(clienteRepository)
         {
             _clienteRepository = clienteRepository;
-        }                
+        }
 
         public Cliente QueryFilter(string nome, string cpf)
         {
             var result = _clienteRepository.QueryFilter(nome, cpf);
             return result;
-        }              
+        }
     }
 }

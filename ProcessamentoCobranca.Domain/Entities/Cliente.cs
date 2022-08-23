@@ -13,8 +13,8 @@ namespace ProcessamentoCobranca.Domain.Entities
         public Cliente(string nome, string estado, string cpf)
         {
             Nome = nome;
-            Estado = estado;    
-            CPF = cpf;  
+            Estado = estado;
+            CPF = cpf;
         }
 
         public Cliente()

@@ -3,12 +3,6 @@ using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Services.Base;
 using ProcessamentoCobranca.Services.Interfaces;
 using ProcessamentoCobranca.Services.Models.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static MassTransit.Logging.OperationName;
 
 namespace ProcessamentoCobranca.Services
 {
@@ -27,7 +21,7 @@ namespace ProcessamentoCobranca.Services
             int digitoFinal = int.Parse(cobranca.CPF.Substring(cobranca.CPF.Length - 2, 2));
             string valorConsumo = digitoInical.ToString() + digitoFinal.ToString() + ",00";
 
-            var consumo = new CobrancaConsumo(cobranca, valorConsumo, cobranca.Key.ToString(),cliente.Estado);
+            var consumo = new CobrancaConsumo(cobranca, valorConsumo, cobranca.Key.ToString(), cliente.Estado);
 
             _cobrancaConsumoRepository.Insert(consumo);
         }
@@ -39,12 +33,12 @@ namespace ProcessamentoCobranca.Services
             var ano = int.Parse(mesrefsplit[1]);
             var mes = int.Parse(mesrefsplit[0]);
             double totalconsumo = 0;
-            double totalcobranca=  0;
+            double totalcobranca = 0;
 
             DateTime primeiroDiaDoMes = new DateTime(ano, mes, 1);
             DateTime ultimoDiaDoMes = new DateTime(primeiroDiaDoMes.Year, primeiroDiaDoMes.Month, DateTime.DaysInMonth(primeiroDiaDoMes.Year, primeiroDiaDoMes.Month)).AddMinutes(1439).AddSeconds(59);
 
-            var consumo =  _cobrancaConsumoRepository.QueryRefMes(primeiroDiaDoMes, ultimoDiaDoMes, estado.ToUpper()).ToList();
+            var consumo = _cobrancaConsumoRepository.QueryRefMes(primeiroDiaDoMes, ultimoDiaDoMes, estado.ToUpper()).ToList();
 
             foreach (var item in consumo)
             {

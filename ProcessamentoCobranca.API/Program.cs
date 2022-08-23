@@ -1,12 +1,12 @@
+using ProcessamentoCobranca.API.Models.Enum;
 using ProcessamentoCobranca.Domain.Settings;
 using ProcessamentoCobranca.Repository;
 using ProcessamentoCobranca.Repository.Context;
 using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Services;
-using ProcessamentoCobranca.Services.Interfaces;
 using ProcessamentoCobranca.Services.Extensions;
+using ProcessamentoCobranca.Services.Interfaces;
 using Serilog;
-using ProcessamentoCobranca.API.Models.Enum;
 
 try
 {

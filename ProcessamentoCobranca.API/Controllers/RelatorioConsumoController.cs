@@ -1,7 +1,5 @@
-﻿using DocumentValidator;
-using MassTransit;
+﻿using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using ProcessamentoCobranca.Services;
 using ProcessamentoCobranca.Services.Interfaces;
 using System.Text.RegularExpressions;
 

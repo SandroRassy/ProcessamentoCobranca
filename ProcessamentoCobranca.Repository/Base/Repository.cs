@@ -1,12 +1,7 @@
 ﻿using MongoDB.Driver;
 using ProcessamentoCobranca.Domain.Interfaces;
-using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Repository.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ProcessamentoCobranca.Repository.Interfaces;
 
 namespace ProcessamentoCobranca.Repository.Base
 {
@@ -33,11 +28,11 @@ namespace ProcessamentoCobranca.Repository.Base
         public T Query(Guid key)
         {
             return _collectionName.AsQueryable<T>().FirstOrDefault(w => w.Key == key);
-        }        
+        }
 
         public IQueryable<T> QueryAll()
         {
             return _collectionName.AsQueryable<T>();
-        }        
+        }
     }
 }
