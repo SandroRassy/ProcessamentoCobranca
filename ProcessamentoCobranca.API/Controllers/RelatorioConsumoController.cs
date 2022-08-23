@@ -10,14 +10,12 @@ namespace ProcessamentoCobranca.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class RelatorioConsumoController : ControllerBase
-    {
-        private readonly IPublishEndpoint _publishEndpoint;
+    {        
         private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
 
 
-        public RelatorioConsumoController(IPublishEndpoint publishEndpoint, ICobrancaConsumoServices cobrancaConsumoServices)
+        public RelatorioConsumoController(ICobrancaConsumoServices cobrancaConsumoServices)
         {
-            _publishEndpoint = publishEndpoint;
             _cobrancaConsumoServices = cobrancaConsumoServices;
         }
 
