@@ -17,16 +17,7 @@ namespace ProcessamentoCobranca.API.Controllers
         public ClientesController(IClienteServices clienteServices)
         {
             _clienteServices = clienteServices;
-        }
-
-        // GET: api/<ClientesController>
-        //[HttpGet]
-        //public IEnumerable<Cliente> Get()
-        //{
-        //    //return new string[] { "value1", "value2" };
-        //    var teste = _clienteServices.QueryAll();
-        //    return teste;
-        //}
+        }        
 
         // GET api/<ClientesController>/5
         [HttpGet("cpf")]
@@ -41,9 +32,8 @@ namespace ProcessamentoCobranca.API.Controllers
             }
             catch (Exception exception)
             {
-                //_logger.LogError(exception, exception.Message, product);
-                Response.StatusCode = 400;
-                return new JsonResult($"Erro: {exception.Message}");
+                //_logger.LogError(exception, exception.Message, product);                
+                return BadRequest($"Erro: {exception.Message}");
             }
         }
 
@@ -61,8 +51,7 @@ namespace ProcessamentoCobranca.API.Controllers
             catch (Exception exception)
             {
                 //_logger.LogError(exception, exception.Message, product);
-                Response.StatusCode = 400;
-                return new JsonResult($"Erro: {exception.Message}");
+                return BadRequest($"Erro: {exception.Message}");
             }
         }
 
@@ -80,17 +69,10 @@ namespace ProcessamentoCobranca.API.Controllers
             }
             catch (Exception exception)
             {
-                //_logger.LogError(exception, exception.Message, product);
-                Response.StatusCode = 400;
-                return new JsonResult($"Erro: {exception.Message}");
+                //_logger.LogError(exception, exception.Message, product);                
+                return BadRequest($"Erro: {exception.Message}");
             }
-        }
-
-        // DELETE api/<ClientesController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        }        
 
         private Cliente ClienteFill(ClienteDTO cliente)
         {

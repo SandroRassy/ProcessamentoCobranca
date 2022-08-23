@@ -36,8 +36,7 @@ namespace ProcessamentoCobranca.API.Controllers
             }
             catch (Exception exception)
             {
-                Response.StatusCode = 400;
-                return new JsonResult($"Erro: {exception.Message}");
+                return BadRequest($"Erro: {exception.Message}");
             }
         }
 
@@ -62,8 +61,7 @@ namespace ProcessamentoCobranca.API.Controllers
             }
             catch (Exception exception)
             {
-                Response.StatusCode = 400;
-                return new JsonResult($"Erro: {exception.Message}");
+                return BadRequest($"Erro: {exception.Message}");
             }
         }
 
@@ -89,16 +87,9 @@ namespace ProcessamentoCobranca.API.Controllers
             }
             catch (Exception exception)
             {
-                Response.StatusCode = 400;
-                return new JsonResult($"Erro: {exception.Message}");
+                return BadRequest($"Erro: {exception.Message}");
             }
-        }
-
-        // DELETE api/<CobrancasController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        }        
 
         private Cobranca CobrancaFill(CobrancaDTO cobranca)
         {

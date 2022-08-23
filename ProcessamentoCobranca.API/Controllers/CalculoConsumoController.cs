@@ -10,15 +10,13 @@ namespace ProcessamentoCobranca.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CalculoConsumoController : ControllerBase
-    {
-        private readonly IPublishEndpoint _publishEndpoint;
+    {        
         private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
         private readonly ICobrancaServices _cobrancaServices;
         private readonly IClienteServices _clienteServices;
 
-        public CalculoConsumoController(IPublishEndpoint publishEndpoint, ICobrancaConsumoServices cobrancaConsumoServices, ICobrancaServices cobrancaServices, IClienteServices clienteServices)
+        public CalculoConsumoController(ICobrancaConsumoServices cobrancaConsumoServices, ICobrancaServices cobrancaServices, IClienteServices clienteServices)
         {
-            _publishEndpoint = publishEndpoint;
             _cobrancaConsumoServices = cobrancaConsumoServices;
             _cobrancaServices = cobrancaServices;
             _clienteServices = clienteServices;
@@ -58,8 +56,7 @@ namespace ProcessamentoCobranca.API.Controllers
             }
             catch (Exception exception)
             {
-                Response.StatusCode = 400;
-                return new JsonResult($"Erro: {exception.Message}");
+                return BadRequest($"Erro: {exception.Message}");
             }
         }
     }
