@@ -34,8 +34,7 @@ namespace ProcessamentoCobranca.API.Controllers
             }
             catch (Exception exception)
             {
-                Response.StatusCode = 400;
-                return new JsonResult($"Erro: {exception.Message}");
+                return BadRequest($"Erro: {exception.Message}");
             }
         }
 
