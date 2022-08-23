@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Configuration;
-//using MongoDB.Bson.IO;
 using Newtonsoft.Json;
 using ProcessamentoCobranca.Services.Models.Shared;
 using ProcessamentoCobranca.WorkerConsumer.Models.DTO;
@@ -27,7 +26,7 @@ namespace ProcessamentoCobranca.WorkerConsumer.Workers
             {
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var parametros = new CalculoConsumoDTO
+                var parametros = new CalculoConsumoDto
                 {
                     key = data.idBoleto,
                     cpf = data.cpf

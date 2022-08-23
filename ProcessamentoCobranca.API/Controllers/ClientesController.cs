@@ -31,8 +31,7 @@ namespace ProcessamentoCobranca.API.Controllers
                     return BadRequest();
             }
             catch (Exception exception)
-            {
-                //_logger.LogError(exception, exception.Message, product);                
+            {                             
                 return BadRequest($"Erro: {exception.Message}");
             }
         }
