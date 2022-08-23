@@ -84,13 +84,7 @@ namespace ProcessamentoCobranca.API.Controllers
                 Response.StatusCode = 400;
                 return new JsonResult($"Erro: {exception.Message}");
             }
-        }
-
-        // DELETE api/<ClientesController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        }        
 
         private Cliente ClienteFill(ClienteDTO cliente)
         {
