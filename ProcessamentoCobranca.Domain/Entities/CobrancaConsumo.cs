@@ -13,8 +13,9 @@ namespace ProcessamentoCobranca.Domain.Entities
     {       
         public string ValorConsumo { get; set; }        
         public string IdBoleto { get; set; }
+        public string Estado { get; set; }
 
-        public CobrancaConsumo(Cobranca obj, string valorconsumo, string idboleto)
+        public CobrancaConsumo(Cobranca obj, string valorconsumo, string idboleto, string estado)
         {
             DataVencimento = obj.DataVencimento;
             CPF = obj.CPF;
@@ -22,6 +23,7 @@ namespace ProcessamentoCobranca.Domain.Entities
             Key = obj.Key;
             ValorConsumo = valorconsumo;
             IdBoleto = idboleto;
+            Estado = estado;
         }
     }
 }

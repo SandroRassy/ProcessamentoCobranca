@@ -25,16 +25,13 @@ namespace ProcessamentoCobranca.WorkerConsumer.Workers
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
                 .Build();
-            UrlAPISetting settings = config.GetRequiredSection("UrlAPISetting").Get<UrlAPISetting>();
-            //Console.WriteLine($"settings.Url: [{settings.Url}"); 
+            UrlAPISetting settings = config.GetRequiredSection("UrlAPISetting").Get<UrlAPISetting>();            
 
             var data = context.Message;      
             
 
             using (var httpClient = new HttpClient())
-            {                
-                //httpClient.BaseAddress = new Uri($"{settings.Url}/api/Clientes/cpf?cpf={data.cpf}");
-                //httpClient.BaseAddress = new Uri($"{settings.Url}/api/Cobrancas/{data.idBoleto}");                
+            {                                              
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var parametros = new CalculoConsumoDTO
@@ -45,7 +42,6 @@ namespace ProcessamentoCobranca.WorkerConsumer.Workers
 
                 var content = new StringContent(JsonConvert.SerializeObject(parametros), Encoding.UTF8, "application/json");
 
-                //var responseMessage = await httpClient.GetAsync("");
                 var responseMessage = httpClient.PostAsync(new Uri($"{settings.Url}/api/CalculoConsumo/"), content).Result;
 
                 if (responseMessage.IsSuccessStatusCode)

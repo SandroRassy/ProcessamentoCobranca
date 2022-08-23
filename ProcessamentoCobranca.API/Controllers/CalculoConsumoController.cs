@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using ProcessamentoCobranca.API.Models.DTO;
+using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,30 +14,16 @@ namespace ProcessamentoCobranca.API.Controllers
     {
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
-        private readonly ICobrancaServices _cobrancaServices;
+        private readonly ICobrancaServices _cobrancaServices;        
+        private readonly IClienteServices _clienteServices;
 
-        public CalculoConsumoController(IPublishEndpoint publishEndpoint, ICobrancaConsumoServices cobrancaConsumoServices, ICobrancaServices cobrancaServices)
+        public CalculoConsumoController(IPublishEndpoint publishEndpoint, ICobrancaConsumoServices cobrancaConsumoServices, ICobrancaServices cobrancaServices, IClienteServices clienteServices)
         {
             _publishEndpoint = publishEndpoint;
             _cobrancaConsumoServices = cobrancaConsumoServices;
             _cobrancaServices = cobrancaServices;
-        }
-
-
-
-        // GET: api/<CalculoConsumoController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        // GET api/<CalculoConsumoController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+            _clienteServices = clienteServices;
+        }        
 
         // POST api/<CalculoConsumoController>
         [HttpPost]
@@ -44,37 +31,37 @@ namespace ProcessamentoCobranca.API.Controllers
         {
             try
             {
-                var boleto = _cobrancaServices.Query(Guid.Parse(calculoConsumo.Key));
+                var cliente = _clienteServices.QueryFilter("", calculoConsumo.CPF);
 
-                if (boleto != null)
+                if(cliente != null)
                 {
-                    var consumo = _cobrancaConsumoServices.Query(Guid.Parse(calculoConsumo.Key));
+                    var boleto = _cobrancaServices.Query(Guid.Parse(calculoConsumo.Key));
 
-                    if(consumo != null)
-                        throw new Exception($"O boleto já foi calculado o consumo.");
+                    if (boleto != null)
+                    {
+                        var consumo = _cobrancaConsumoServices.Query(Guid.Parse(calculoConsumo.Key));
 
-                    _cobrancaConsumoServices.CalcularConsumo(boleto);
+                        if (consumo != null)
+                            throw new Exception($"O boleto já foi calculado o consumo.");
+
+                        _cobrancaConsumoServices.CalcularConsumo(boleto, cliente);
+                        return Ok(calculoConsumo);
+                    }
+                    else
+                    {
+                        throw new Exception($"Boleto não existe.");
+                    }
                 }
-
-                return Ok(calculoConsumo);
+                else
+                {
+                    throw new Exception($"Cliente não existe.");
+                }                
             }
             catch (Exception exception)
             {
                 Response.StatusCode = 400;
                 return new JsonResult($"Erro: {exception.Message}");
             }
-        }
-
-        // PUT api/<CalculoConsumoController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        // DELETE api/<CalculoConsumoController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        }        
     }
 }

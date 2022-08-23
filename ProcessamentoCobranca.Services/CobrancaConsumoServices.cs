@@ -20,13 +20,13 @@ namespace ProcessamentoCobranca.Services
             _cobrancaConsumoRepository = cobrancaConsumoRepository;
         }
 
-        public void CalcularConsumo(Cobranca cobranca)
+        public void CalcularConsumo(Cobranca cobranca, Cliente cliente)
         {
             int digitoInical = int.Parse(cobranca.CPF.Substring(0, 2));
             int digitoFinal = int.Parse(cobranca.CPF.Substring(cobranca.CPF.Length - 2, 2));
             string valorConsumo = digitoInical.ToString() + digitoFinal.ToString() + ",00";
 
-            var consumo = new CobrancaConsumo(cobranca, valorConsumo, cobranca.Key.ToString());
+            var consumo = new CobrancaConsumo(cobranca, valorConsumo, cobranca.Key.ToString(),cliente.Estado);
 
             _cobrancaConsumoRepository.Insert(consumo);
         }
