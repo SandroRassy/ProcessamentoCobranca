@@ -12,8 +12,7 @@ namespace ProcessamentoCobranca.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CobrancasController : ControllerBase
-    {
-        private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
+    {        
         private readonly ICobrancaServices _cobrancaServices;
         private readonly IClienteServices _clienteServices;
         private readonly IPublishEndpoint _publishEndpoint;
@@ -22,8 +21,7 @@ namespace ProcessamentoCobranca.API.Controllers
         {
             _cobrancaServices = cobrancaServices;
             _clienteServices = clienteServices;
-            _publishEndpoint = publishEndpoint;
-            _cobrancaConsumoServices = cobrancaConsumoServices;
+            _publishEndpoint = publishEndpoint;            
         }
         // GET: api/<CobrancasController>
         [HttpGet]
@@ -41,22 +39,7 @@ namespace ProcessamentoCobranca.API.Controllers
                 Response.StatusCode = 400;
                 return new JsonResult($"Erro: {exception.Message}");
             }                                 
-        }
-
-        //GET api/<CobrancasController>/5
-        [HttpGet("{id}")]
-        public ActionResult Get(string id)
-        {
-            try
-            {
-                return Ok(_cobrancaServices.Query(Guid.Parse(id)));
-            }
-            catch (Exception exception)
-            {
-                Response.StatusCode = 400;
-                return new JsonResult($"Erro: {exception.Message}");
-            }
-        }
+        }        
 
         // POST api/<CobrancasController>
         [HttpPost]
@@ -183,15 +166,7 @@ namespace ProcessamentoCobranca.API.Controllers
         }        
 
         private bool RealValidate(string valorcobranca)
-        {
-            //bool retorno = false;
-            //Regex r = new Regex(@"R\$ ?\d{1,3}(\.\d{3})*,\d{2}");
-
-            //if (r.IsMatch(valorcobranca))
-            //{
-            //    retorno = true;   
-            //}
-            //return retorno;
+        {            
             return RegexBase(valorcobranca, @"R\$ ?\d{1,3}(\.\d{3})*,\d{2}");
         }
         private bool MesRefValidate(string mesref)
@@ -199,12 +174,12 @@ namespace ProcessamentoCobranca.API.Controllers
             return RegexBase(mesref, @"^((0[1-9])|(1[0-2]))/([0-9]{4})$");
         }
 
-        private static bool RegexBase(string mesref, string regex)
+        private static bool RegexBase(string valor, string regex)
         {
             bool retorno = false;
             Regex r = new Regex(regex);
 
-            if (r.IsMatch(mesref))
+            if (r.IsMatch(valor))
             {
                 retorno = true;
             }
