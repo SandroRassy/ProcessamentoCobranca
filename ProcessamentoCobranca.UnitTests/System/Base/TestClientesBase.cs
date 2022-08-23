@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
+﻿using Microsoft.Extensions.Configuration;
 using ProcessamentoCobranca.API.Models.Enum;
 using ProcessamentoCobranca.Domain.Settings;
 using ProcessamentoCobranca.Repository;

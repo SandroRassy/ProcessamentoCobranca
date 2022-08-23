@@ -1,5 +1,4 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProcessamentoCobranca.Services.Interfaces;
 using System.Text.RegularExpressions;
 
@@ -10,7 +9,7 @@ namespace ProcessamentoCobranca.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class RelatorioConsumoController : ControllerBase
-    {        
+    {
         private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
 
 

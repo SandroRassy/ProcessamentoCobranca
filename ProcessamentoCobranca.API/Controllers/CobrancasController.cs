@@ -89,7 +89,7 @@ namespace ProcessamentoCobranca.API.Controllers
             {
                 return BadRequest($"Erro: {exception.Message}");
             }
-        }        
+        }
 
         private Cobranca CobrancaFill(CobrancaDTO cobranca)
         {

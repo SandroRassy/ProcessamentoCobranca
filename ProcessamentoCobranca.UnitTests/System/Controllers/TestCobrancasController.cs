@@ -1,9 +1,7 @@
 ﻿using FluentAssertions;
-using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 //using Xunit.DependencyInjection;
 using ProcessamentoCobranca.API.Controllers;
-using ProcessamentoCobranca.API.Models.DTO;
 using ProcessamentoCobranca.UnitTests.System.Base;
 
 namespace ProcessamentoCobranca.UnitTests.System.Controllers
@@ -15,15 +13,15 @@ namespace ProcessamentoCobranca.UnitTests.System.Controllers
         //{
         //    _publishEndpoint = publishEndpoint;
         //}
-        
+
         [Fact]
         public async Task Get_ShouldReturn200Status()
         {
             /// Arrange            
-            var sut = new CobrancasController(_cobrancaService,_clienteService, null, _cobrancaConsumoService);
+            var sut = new CobrancasController(_cobrancaService, _clienteService, null, _cobrancaConsumoService);
 
             /// Act
-            var result = (ObjectResult)sut.Get("08309184778","08/2020");
+            var result = (ObjectResult)sut.Get("08309184778", "08/2020");
 
             /// Assert
             result.StatusCode.Should().Be(200);

@@ -12,7 +12,7 @@ namespace ProcessamentoCobranca.UnitTests.System.Controllers
         public async Task Post_IdBoleto_ShouldReturn400Status()
         {
             /// Arrange            
-            var sut = new CalculoConsumoController(_cobrancaConsumoService,_cobrancaService, _clienteService);
+            var sut = new CalculoConsumoController(_cobrancaConsumoService, _cobrancaService, _clienteService);
 
             /// Act            
             var CalculoConsumoDTO = new CalculoConsumoDTO();

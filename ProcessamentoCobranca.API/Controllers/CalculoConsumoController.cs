@@ -1,5 +1,4 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProcessamentoCobranca.API.Models.DTO;
 using ProcessamentoCobranca.Services.Interfaces;
 
@@ -10,7 +9,7 @@ namespace ProcessamentoCobranca.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CalculoConsumoController : ControllerBase
-    {        
+    {
         private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
         private readonly ICobrancaServices _cobrancaServices;
         private readonly IClienteServices _clienteServices;

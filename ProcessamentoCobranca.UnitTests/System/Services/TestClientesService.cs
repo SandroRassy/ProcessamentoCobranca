@@ -1,15 +1,14 @@
 ﻿using FluentAssertions;
 using MongoDB.Driver;
-using ProcessamentoCobranca.Domain.Entities;
 using ProcessamentoCobranca.UnitTests.System.Base;
 
 namespace ProcessamentoCobranca.UnitTests.System.Services
 {
     public class TestClientesService : TestBase
-    {        
+    {
         [Fact]
         public async Task GetAll_Return()
-        {            
+        {
             /// Act
             var result = _clienteService.QueryAll().ToList();
 
