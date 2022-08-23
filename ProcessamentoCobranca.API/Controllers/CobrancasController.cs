@@ -2,9 +2,9 @@
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using ProcessamentoCobranca.API.Models.DTO;
-using ProcessamentoCobranca.API.Models.Shared;
 using ProcessamentoCobranca.Domain.Entities;
 using ProcessamentoCobranca.Services.Interfaces;
+using ProcessamentoCobranca.Services.Models.Shared;
 using System.Text.RegularExpressions;
 
 namespace ProcessamentoCobranca.API.Controllers
@@ -13,15 +13,17 @@ namespace ProcessamentoCobranca.API.Controllers
     [ApiController]
     public class CobrancasController : ControllerBase
     {
+        private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
         private readonly ICobrancaServices _cobrancaServices;
         private readonly IClienteServices _clienteServices;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public CobrancasController(ICobrancaServices cobrancaServices, IClienteServices clienteServices, IPublishEndpoint publishEndpoint)
+        public CobrancasController(ICobrancaServices cobrancaServices, IClienteServices clienteServices, IPublishEndpoint publishEndpoint, ICobrancaConsumoServices cobrancaConsumoServices)
         {
             _cobrancaServices = cobrancaServices;
             _clienteServices = clienteServices;
             _publishEndpoint = publishEndpoint;
+            _cobrancaConsumoServices = cobrancaConsumoServices;
         }
         // GET: api/<CobrancasController>
         [HttpGet]
@@ -41,12 +43,20 @@ namespace ProcessamentoCobranca.API.Controllers
             }                                 
         }
 
-        // GET api/<CobrancasController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        //GET api/<CobrancasController>/5
+        [HttpGet("{id}")]
+        public ActionResult Get(string id)
+        {
+            try
+            {
+                return Ok(_cobrancaServices.Query(Guid.Parse(id)));
+            }
+            catch (Exception exception)
+            {
+                Response.StatusCode = 400;
+                return new JsonResult($"Erro: {exception.Message}");
+            }
+        }
 
         // POST api/<CobrancasController>
         [HttpPost]
@@ -56,11 +66,13 @@ namespace ProcessamentoCobranca.API.Controllers
             {
                 if (CobrancaValidate(cobranca))
                 {
-                    _cobrancaServices.Insert(CobrancaFill(cobranca));
+                    var obj = CobrancaFill(cobranca);
+                    _cobrancaServices.Insert(obj);
                     await _publishEndpoint.Publish<CalculoConsumo>(new
                     {
-                        cpf = cobranca.CPF
-                    }) ;
+                        cpf = cobranca.CPF,
+                        idBoleto = obj.Key.ToString()
+                    });
                 }
 
                 return Ok(cobranca);
@@ -70,17 +82,25 @@ namespace ProcessamentoCobranca.API.Controllers
                 Response.StatusCode = 400;
                 return new JsonResult($"Erro: {exception.Message}");
             }
-        }
+        }        
 
         // PUT api/<CobrancasController>/5
         [HttpPut("")]
-        public ActionResult Put(string dataVencimento, string cpf, string valorcobranca)
+        public async Task<IActionResult> Put(string dataVencimento, string cpf, string valorcobranca)
         {
             try
             {
                 var cobranca = new CobrancaDTO(dataVencimento, cpf, valorcobranca);
                 if (CobrancaValidate(cobranca))
-                    _cobrancaServices.Insert(CobrancaFill(cobranca));
+                {
+                    var obj = CobrancaFill(cobranca);
+                    _cobrancaServices.Insert(obj);
+                    await _publishEndpoint.Publish<CalculoConsumo>(new
+                    {
+                        cpf = cobranca.CPF,
+                        idBoleto = obj.Key.ToString()
+                    });
+                }                    
 
                 return Ok(cobranca);
             }
