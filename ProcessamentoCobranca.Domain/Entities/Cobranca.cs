@@ -17,7 +17,7 @@ namespace ProcessamentoCobranca.Domain.Entities
 
         public Cobranca(DateTime dataVencimento, string cpf, string valorcobranca)
         {
-            DataVencimento = dataVencimento;    
+            DataVencimento = dataVencimento;
             CPF = cpf;
             ValorCobranca = valorcobranca;
         }

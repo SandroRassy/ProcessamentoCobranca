@@ -1,7 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using ProcessamentoCobranca.API.Models.DTO;
-using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,7 +13,7 @@ namespace ProcessamentoCobranca.API.Controllers
     {
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ICobrancaConsumoServices _cobrancaConsumoServices;
-        private readonly ICobrancaServices _cobrancaServices;        
+        private readonly ICobrancaServices _cobrancaServices;
         private readonly IClienteServices _clienteServices;
 
         public CalculoConsumoController(IPublishEndpoint publishEndpoint, ICobrancaConsumoServices cobrancaConsumoServices, ICobrancaServices cobrancaServices, IClienteServices clienteServices)
@@ -23,7 +22,7 @@ namespace ProcessamentoCobranca.API.Controllers
             _cobrancaConsumoServices = cobrancaConsumoServices;
             _cobrancaServices = cobrancaServices;
             _clienteServices = clienteServices;
-        }        
+        }
 
         // POST api/<CalculoConsumoController>
         [HttpPost]
@@ -33,7 +32,7 @@ namespace ProcessamentoCobranca.API.Controllers
             {
                 var cliente = _clienteServices.QueryFilter("", calculoConsumo.CPF);
 
-                if(cliente != null)
+                if (cliente != null)
                 {
                     var boleto = _cobrancaServices.Query(Guid.Parse(calculoConsumo.Key));
 
@@ -55,13 +54,13 @@ namespace ProcessamentoCobranca.API.Controllers
                 else
                 {
                     throw new Exception($"Cliente não existe.");
-                }                
+                }
             }
             catch (Exception exception)
             {
                 Response.StatusCode = 400;
                 return new JsonResult($"Erro: {exception.Message}");
             }
-        }        
+        }
     }
 }

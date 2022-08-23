@@ -3,11 +3,6 @@ using ProcessamentoCobranca.Domain.Entities;
 using ProcessamentoCobranca.Repository.Base;
 using ProcessamentoCobranca.Repository.Context;
 using ProcessamentoCobranca.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Repository
 {
@@ -24,7 +19,7 @@ namespace ProcessamentoCobranca.Repository
 
         public IQueryable<Cobranca> QueryCPF(string cpf)
         {
-            var retorno = _collectionName.AsQueryable<Cobranca>().Where(w => w.CPF == cpf );
+            var retorno = _collectionName.AsQueryable<Cobranca>().Where(w => w.CPF == cpf);
             return retorno;
         }
 
@@ -42,7 +37,7 @@ namespace ProcessamentoCobranca.Repository
 
         public IQueryable<Cobranca> QueryRefMes(DateTime dataInicio, DateTime dataFim, string cpf)
         {
-            var retorno = _collectionName.AsQueryable<Cobranca>().Where(w => w.CPF == cpf && w.DataVencimento >= dataInicio && w.DataVencimento <= dataFim); 
+            var retorno = _collectionName.AsQueryable<Cobranca>().Where(w => w.CPF == cpf && w.DataVencimento >= dataInicio && w.DataVencimento <= dataFim);
             return retorno;
         }
 

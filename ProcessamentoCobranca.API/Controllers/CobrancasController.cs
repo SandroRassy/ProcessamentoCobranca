@@ -12,7 +12,7 @@ namespace ProcessamentoCobranca.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CobrancasController : ControllerBase
-    {        
+    {
         private readonly ICobrancaServices _cobrancaServices;
         private readonly IClienteServices _clienteServices;
         private readonly IPublishEndpoint _publishEndpoint;
@@ -21,16 +21,16 @@ namespace ProcessamentoCobranca.API.Controllers
         {
             _cobrancaServices = cobrancaServices;
             _clienteServices = clienteServices;
-            _publishEndpoint = publishEndpoint;            
+            _publishEndpoint = publishEndpoint;
         }
         // GET: api/<CobrancasController>
         [HttpGet]
-        public ActionResult Get(string ?cpf, string ?mesref)
+        public ActionResult Get(string? cpf, string? mesref)
         {
             try
             {
-                if (GetRefMesCpf(cpf,mesref))                    
-                    return Ok(_cobrancaServices.QueryFilter(mesref,cpf));
+                if (GetRefMesCpf(cpf, mesref))
+                    return Ok(_cobrancaServices.QueryFilter(mesref, cpf));
                 else
                     return BadRequest();
             }
@@ -38,13 +38,13 @@ namespace ProcessamentoCobranca.API.Controllers
             {
                 Response.StatusCode = 400;
                 return new JsonResult($"Erro: {exception.Message}");
-            }                                 
-        }        
+            }
+        }
 
         // POST api/<CobrancasController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CobrancaDTO cobranca)
-        {            
+        {
             try
             {
                 if (CobrancaValidate(cobranca))
@@ -65,7 +65,7 @@ namespace ProcessamentoCobranca.API.Controllers
                 Response.StatusCode = 400;
                 return new JsonResult($"Erro: {exception.Message}");
             }
-        }        
+        }
 
         // PUT api/<CobrancasController>/5
         [HttpPut("")]
@@ -83,7 +83,7 @@ namespace ProcessamentoCobranca.API.Controllers
                         cpf = cobranca.CPF,
                         idBoleto = obj.Key.ToString()
                     });
-                }                    
+                }
 
                 return Ok(cobranca);
             }
@@ -104,7 +104,7 @@ namespace ProcessamentoCobranca.API.Controllers
         {
             DateTime data;
             DateTime.TryParse(DateTime.Now.ToString(), out data);
-            return new Cobranca(data, cobranca.CPF, cobranca.ValorCobranca.Replace("R$",String.Empty));
+            return new Cobranca(data, cobranca.CPF, cobranca.ValorCobranca.Replace("R$", String.Empty));
         }
 
         private bool CobrancaValidate(CobrancaDTO cobranca)
@@ -120,14 +120,14 @@ namespace ProcessamentoCobranca.API.Controllers
                     if (cobranca.ValorCobranca.Length < 1)
                         throw new Exception($"O campo Valor Cobrança não pode ser vazio");
 
-                    if(!RealValidate(cobranca.ValorCobranca))
+                    if (!RealValidate(cobranca.ValorCobranca))
                         throw new Exception($"Valor da cobrança não esta no formatado.");
 
                     if (!CpfValidation.Validate(cobranca.CPF))
                         throw new Exception($"CPF inválido!");
 
                     var cliente = _clienteServices.QueryFilter(String.Empty, cobranca.CPF);
-                    if(cliente == null)
+                    if (cliente == null)
                         throw new Exception($"CPF não cadastrado!");
 
                     Validado = true;
@@ -145,7 +145,7 @@ namespace ProcessamentoCobranca.API.Controllers
             return Validado;
         }
 
-        private bool GetRefMesCpf(string ?cpf, string ?mesref)
+        private bool GetRefMesCpf(string? cpf, string? mesref)
         {
             bool Validado = false;
 
@@ -154,23 +154,23 @@ namespace ProcessamentoCobranca.API.Controllers
                 if (!CpfValidation.Validate(cpf))
                     throw new Exception($"CPF inválido!");
                 Validado = true;
-            } 
+            }
             if (!String.IsNullOrEmpty(mesref))
             {
                 if (!MesRefValidate(mesref))
                     throw new Exception($"Mês de referência inválido!");
                 Validado = true;
-            }            
+            }
 
             return Validado;
-        }        
+        }
 
         private bool RealValidate(string valorcobranca)
-        {            
+        {
             return RegexBase(valorcobranca, @"R\$ ?\d{1,3}(\.\d{3})*,\d{2}");
         }
         private bool MesRefValidate(string mesref)
-        {                        
+        {
             return RegexBase(mesref, @"^((0[1-9])|(1[0-2]))/([0-9]{4})$");
         }
 

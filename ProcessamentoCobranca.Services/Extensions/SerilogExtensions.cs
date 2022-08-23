@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Serilog.Events;
-using Serilog.Filters;
-using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Serilog.Exceptions;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
+using Serilog.Exceptions;
+using Serilog.Filters;
 
 namespace ProcessamentoCobranca.Services.Extensions
 {

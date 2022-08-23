@@ -1,13 +1,7 @@
 ﻿using ProcessamentoCobranca.Domain.Entities;
-using ProcessamentoCobranca.Repository;
 using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Services.Base;
 using ProcessamentoCobranca.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Services
 {
@@ -15,10 +9,10 @@ namespace ProcessamentoCobranca.Services
     {
         private readonly ICobrancaRepository _cobrancaRepository;
 
-        public CobrancaServices(ICobrancaRepository cobrancaRepository):base(cobrancaRepository)
+        public CobrancaServices(ICobrancaRepository cobrancaRepository) : base(cobrancaRepository)
         {
             _cobrancaRepository = cobrancaRepository;
-        }        
+        }
 
         public IQueryable<Cobranca> QueryFilter(string mesref, string cpf)
         {
@@ -31,7 +25,7 @@ namespace ProcessamentoCobranca.Services
                 DateTime primeiroDiaDoMes = new DateTime(ano, mes, 1);
                 DateTime ultimoDiaDoMes = new DateTime(primeiroDiaDoMes.Year, primeiroDiaDoMes.Month, DateTime.DaysInMonth(primeiroDiaDoMes.Year, primeiroDiaDoMes.Month)).AddMinutes(1439).AddSeconds(59);
 
-                if(String.IsNullOrEmpty(cpf))
+                if (String.IsNullOrEmpty(cpf))
                     return _cobrancaRepository.QueryRefMes(primeiroDiaDoMes, ultimoDiaDoMes);
                 else
                     return _cobrancaRepository.QueryRefMes(primeiroDiaDoMes, ultimoDiaDoMes, cpf);
@@ -41,10 +35,10 @@ namespace ProcessamentoCobranca.Services
                 return _cobrancaRepository.QueryCPF(cpf);
             }
 
-            
 
-            
-            
+
+
+
         }
     }
 }

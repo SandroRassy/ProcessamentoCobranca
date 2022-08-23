@@ -1,11 +1,5 @@
-﻿using MongoDB.Driver;
-using ProcessamentoCobranca.Repository.Interfaces;
+﻿using ProcessamentoCobranca.Repository.Interfaces;
 using ProcessamentoCobranca.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.Services.Base
 {
@@ -16,7 +10,7 @@ namespace ProcessamentoCobranca.Services.Base
         {
             _repository = repository;
         }
-        
+
         public void Insert(T obj)
         {
             _repository.Insert(obj);
@@ -30,6 +24,6 @@ namespace ProcessamentoCobranca.Services.Base
         public IQueryable<T> QueryAll()
         {
             return _repository.QueryAll();
-        }        
+        }
     }
 }

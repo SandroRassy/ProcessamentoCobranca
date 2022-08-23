@@ -3,12 +3,7 @@ using MassTransit.Metadata;
 using Microsoft.Extensions.Logging;
 using ProcessamentoCobranca.Services.Models.Shared;
 using ProcessamentoCobranca.WorkerConsumer.Workers;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcessamentoCobranca.WorkerConsumer.Workers
 {
@@ -19,13 +14,13 @@ namespace ProcessamentoCobranca.WorkerConsumer.Workers
         {
             _logger = logger;
         }
-    
+
         public async Task Consume(ConsumeContext<CalculoConsumo> context)
         {
             var timer = Stopwatch.StartNew();
 
             try
-            {                
+            {
                 var cpf = context.Message.cpf;
 
                 _logger.LogInformation($"Receive cpf: {cpf}");

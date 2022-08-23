@@ -2,11 +2,8 @@
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProcessamentoCobranca.Services;
 using ProcessamentoCobranca.Services.Extensions;
-using ProcessamentoCobranca.Services.Interfaces;
 using ProcessamentoCobranca.WorkerConsumer.Workers;
 using Serilog;
 
@@ -14,7 +11,7 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
     builder.AddSerilog("Worker MassTransit");
-    Log.Information("Starting Worker");   
+    Log.Information("Starting Worker");
 
     var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -36,16 +33,16 @@ try
     var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
     {
         var rabbitMQSettings = builder.Configuration.GetConnectionString("RabbitMq");
-        cfg.Host(rabbitMQSettings);        
+        cfg.Host(rabbitMQSettings);
         cfg.ReceiveEndpoint("CalculoConsumo", e =>
         {
-            var teste = e.InputAddress;           
+            var teste = e.InputAddress;
             e.PrefetchCount = 10;
             e.UseMessageRetry(p => p.Interval(3, 100));
             e.Consumer<WorkerCalculoConsumo>();
         });
     });
-    
+
     await busControl.StartAsync(new CancellationToken());
 
     try
@@ -96,5 +93,5 @@ try
 catch (Exception)
 {
 
-	throw;
+    throw;
 }

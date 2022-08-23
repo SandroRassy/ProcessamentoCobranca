@@ -31,13 +31,13 @@ namespace ProcessamentoCobranca.API.Controllers
         // GET api/<ClientesController>/5
         [HttpGet("cpf")]
         public ActionResult Get(string cpf)
-        {            
+        {
             try
             {
                 if (CPFValidate(cpf))
                     return Ok(_clienteServices.QueryFilter(String.Empty, cpf));
                 else
-                    return BadRequest();  
+                    return BadRequest();
             }
             catch (Exception exception)
             {
@@ -53,15 +53,15 @@ namespace ProcessamentoCobranca.API.Controllers
         {
             try
             {
-                if(ClienteValidate(cliente))    
+                if (ClienteValidate(cliente))
                     _clienteServices.Insert(ClienteFill(cliente));
 
-                return Ok(cliente); 
+                return Ok(cliente);
             }
             catch (Exception exception)
             {
                 //_logger.LogError(exception, exception.Message, product);
-                Response.StatusCode = 400;  
+                Response.StatusCode = 400;
                 return new JsonResult($"Erro: {exception.Message}");
             }
         }
@@ -100,11 +100,11 @@ namespace ProcessamentoCobranca.API.Controllers
         private bool ClienteValidate(ClienteDTO cliente)
         {
             bool Validado = false;
-            if(cliente != null)
+            if (cliente != null)
             {
                 if (!String.IsNullOrEmpty(cliente.Nome) || !String.IsNullOrEmpty(cliente.Estado) || !String.IsNullOrEmpty(cliente.CPF))
                 {
-                    if(cliente.Estado.Length > 2)
+                    if (cliente.Estado.Length > 2)
                         throw new Exception($"O campo Estado não pode ser maior que 2 caracteres");
 
                     if (cliente.Nome.Length > 80)
@@ -148,6 +148,6 @@ namespace ProcessamentoCobranca.API.Controllers
             }
 
             return Validado;
-        }        
+        }
     }
 }
