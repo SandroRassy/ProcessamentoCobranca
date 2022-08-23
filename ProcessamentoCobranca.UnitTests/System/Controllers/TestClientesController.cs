@@ -15,7 +15,7 @@ namespace ProcessamentoCobranca.UnitTests.System.Controllers
             var sut = new ClientesController(_clienteService);
 
             /// Act
-            var result = (ObjectResult)sut.Get("08309184778");
+            var result = (ObjectResult)sut.Get("50974463051");
 
             /// Assert
             result.StatusCode.Should().Be(200);
@@ -28,7 +28,7 @@ namespace ProcessamentoCobranca.UnitTests.System.Controllers
             var sut = new ClientesController(_clienteService);
 
             /// Act            
-            var clienteDTO = new ClienteDTO("Sandro", "teste_erro", "08309184778");
+            var clienteDTO = new ClienteDTO("Sandro", "teste_erro", "50974463051");
             var result = (ObjectResult)sut.Post(clienteDTO);
 
             /// Assert
@@ -42,7 +42,7 @@ namespace ProcessamentoCobranca.UnitTests.System.Controllers
             var sut = new ClientesController(_clienteService);
 
             /// Act                        
-            var result = (ObjectResult)sut.Put("Sandro", "teste_erro", "08309184778");
+            var result = (ObjectResult)sut.Put("Sandro", "teste_erro", "50974463051");
 
             /// Assert
             result.StatusCode.Should().Be(400);

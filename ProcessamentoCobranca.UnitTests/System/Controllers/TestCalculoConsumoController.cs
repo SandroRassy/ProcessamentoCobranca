@@ -16,7 +16,7 @@ namespace ProcessamentoCobranca.UnitTests.System.Controllers
 
             /// Act            
             var CalculoConsumoDTO = new CalculoConsumoDTO();
-            CalculoConsumoDTO.CPF = "08309184778";
+            CalculoConsumoDTO.CPF = "50974463051";
             CalculoConsumoDTO.Key = "9d959854-5c31-43ee-823e-7ff6ece7bd7e";
             var result = (ObjectResult)sut.Post(CalculoConsumoDTO).Result;
 
