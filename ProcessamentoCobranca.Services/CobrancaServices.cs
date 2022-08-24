@@ -35,10 +35,6 @@ namespace ProcessamentoCobranca.Services
                 return _cobrancaRepository.QueryCPF(cpf);
             }
 
-
-
-
-
         }
     }
 }

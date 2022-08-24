@@ -6,7 +6,7 @@ using ProcessamentoCobranca.UnitTests.System.Base;
 namespace ProcessamentoCobranca.UnitTests.System.Controllers
 {
     public class TestCobrancasController : TestBase
-    {        
+    {
 
         [Fact]
         public async Task Get_ShouldReturn200Status()

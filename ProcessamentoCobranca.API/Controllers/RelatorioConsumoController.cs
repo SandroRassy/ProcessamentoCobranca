@@ -36,7 +36,7 @@ namespace ProcessamentoCobranca.API.Controllers
         }
 
         private bool GetRefMesEstado(string? estado, string? mesref)
-        {            
+        {
             bool validadoestado = false;
             bool validadomesref = false;
 
