@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using MongoDB.Driver;
-using ProcessamentoCobranca.Domain.Entities;
 using ProcessamentoCobranca.UnitTests.System.Base;
 
 namespace ProcessamentoCobranca.UnitTests.System.Services
@@ -25,6 +24,6 @@ namespace ProcessamentoCobranca.UnitTests.System.Services
 
             /// Assert
             result.Should().NotBeNull();
-        }        
+        }
     }
 }

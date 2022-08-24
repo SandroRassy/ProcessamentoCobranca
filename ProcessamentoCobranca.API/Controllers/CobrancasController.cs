@@ -96,7 +96,7 @@ namespace ProcessamentoCobranca.API.Controllers
             DateTime data;
             DateTime.TryParse(cobranca.DataVencimento.ToString(), out data);
 
-            if(!(data.Date >= DateTime.Now.Date))
+            if (!(data.Date >= DateTime.Now.Date))
                 throw new Exception($"Data não pode ser menor que atual!");
 
             return new Cobranca(data, cobranca.CPF, cobranca.ValorCobranca.Replace("R$", String.Empty));
@@ -119,9 +119,9 @@ namespace ProcessamentoCobranca.API.Controllers
                     if (!RealValidate(cobranca.ValorCobranca))
                         throw new Exception($"Valor da cobrança não esta no formatado.");
 
-                    if(Double.TryParse(cobranca.ValorCobranca.Replace("R$",String.Empty), out valor))
-                        {
-                           if(!(valor > 0))
+                    if (Double.TryParse(cobranca.ValorCobranca.Replace("R$", String.Empty), out valor))
+                    {
+                        if (!(valor > 0))
                             throw new Exception($"Valor da cobrança precisa ser maior que zero.");
                     }
                     else
